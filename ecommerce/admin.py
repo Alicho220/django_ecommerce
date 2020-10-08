@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Customer, Product, Order, OrderItem, DeliveryAddress
+from .models import *
 
 
 admin.site.register(Customer)

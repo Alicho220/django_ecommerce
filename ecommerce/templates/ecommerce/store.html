@@ -1,56 +1,22 @@
-{% extends "base.html" %}
+{% extends "ecommerce/base.html" %} 
 {% load static %}
-
 {% block content %}
-    <div class = "row">
-        <div class = col-lg-4>
-
-            <img class = "thumb" src="{{product.image.url}}">
-                <h6 class="product">{{producct.price}}</h6>  
-            <div class = "box-element product">
-                    <hr>
-                <button class="btn btn-outline-secondary"> Add To Cart</button>
-                    <a class="btn btn-outline-secondary" href="#"> View</a>
-                    <h4>${{product.price|floatformat:2}}</h4>
-                </div>       
-        </div>
-
-
-         <!-- {% comment %} <div class = col-lg-4>
-
-            <img class = "thumb" src="{% static 'images/EDD38307-8E45-4D8A-BDB1-561F379D761AL0001.jpeg' %}">
-            <div class = "box-element product">
-
-                <h1>lorem</h1>
-
-
-            </div>
-        
-        
-        </div>
-
-
-         <div class = col-lg-4>
-
-            <img class = "thumb" src="{% static 'images/EDD38307-8E45-4D8A-BDB1-561F379D761AL0001.jpeg' %}">
-            <div class = "box-element product">
-
-                <h1>lorem</h1>
-                </br>
-                <button>Price</buttom>
-
-
-            </div>
-
-
-
-            
-        
-        
-        </div>
-    
-    
-    </div> {% endcomment %} -->
-
-
+<div class="row">
+    {% for product in products %}
+    <div class="col-lg-4">
+      <img class="thumb" src="
+      {{product.image.url}}">
+        <div class="box-element product">
+            <h6><strong>{{product.name}}</strong></h6>
+         <hr>
+            <button data-product="{{product.id}} "data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+            <a class="btn btn-outline-success" href="#">View</a>
+            <h4 style="display: inline-block;float:right">${{product.price|floatformat:2}}</h4>
+        </div>    
+    </div>
+    {% endfor %}
+</div>
 {% endblock content %}
+
+
+
