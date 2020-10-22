@@ -20,18 +20,17 @@
     />
 
     <script type="text/javascript">
-
       var user = '{{request.user}}'
 
-      function getCookie(name){
+      function getToken(name){
 
         var cookieValue = null;
         if(document.cookie && document.cookie !== ''){
           var cookies = document.cookie.split(';');
           for(var i = 0; i < cookies.length; i++){
-            var cookies = cookies[i].trim();
+            var cookie = cookies[i].trim();
             // does the cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')){
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
               cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
               break;
             }
@@ -39,7 +38,34 @@
         }
         return cookieValue;
       }
-      var csrftoken = getCookie('csrftoken');
+      var csrftoken = getToken('csrftoken');
+
+
+      function getcookie(name){
+        //split cookie string and get all individual name=value pairs in an array
+      var cookieArr = document.cookie.split(";");
+
+      //loop throiugh the array elements
+      for(var i = 0; i < cookieArr.length; i++){
+        var cookiePair = cookieArr[i].split("=");
+
+        //removing white space in front of the cookie name and compare with the given string
+        if (name== cookiePair
+        [0].trim()){
+          // Decode the cookie value and return
+          return decodeURIComponent(cookiePair[i]);
+        }
+      }
+      //return null if not found
+      return null;
+      }
+      var cart = JSON.parse(getcookie('cart'))
+      if(cart == undefined){
+        cart ={}
+        console.log('Cart was created')
+        document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+      }
+      console.log('Cart:', cart)
     </script>
   </head>
   <body>
@@ -73,6 +99,7 @@
           <a href="{% url 'cart' %}">
             <img class="cart-icon" src="{% static 'images/cart.png'%}" />
           </a>
+          <p id = 'cart-total'>{{cartItems}}</p>
         </div>
       </div>
     </nav>
